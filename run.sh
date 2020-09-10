@@ -13,6 +13,7 @@ INPUT_OUTDIR="$(eval echo $INPUT_OUTDIR)"
 PKGBUILD_DIR=$(dirname $(readlink -f $INPUT_PKGBUILD))
 
 # Prepare the environment
+echo -e "[multilib]\nInclude = \/etc\/pacman\.d\/mirrorlist" >> /etc/pacman.conf
 pacman -Syu --noconfirm --noprogressbar --needed base-devel devtools btrfs-progs dbus sudo
 
 dbus-uuidgen --ensure=/etc/machine-id
@@ -21,9 +22,6 @@ sed -i "s|MAKEFLAGS=.*|MAKEFLAGS=-j$(nproc)|" /etc/makepkg.conf
 
 useradd -m user
 cd /home/user
-
-echo -e "[multilib]\nInclude = \/etc\/pacman\.d\/mirrorlist" >> /etc/pacman.conf
-pacman -Syyu --noconfirm --noprogressbar
 
 # Copy PKGBUILD and others
 cp "$PKGBUILD_DIR"/* ./ || true
