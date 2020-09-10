@@ -14,7 +14,7 @@ PKGBUILD_DIR=$(dirname $(readlink -f $INPUT_PKGBUILD))
 
 # Prepare the environment
 echo -e "[multilib]\nInclude = \/etc\/pacman\.d\/mirrorlist" >> /etc/pacman.conf
-pacman -Syu --noconfirm --noprogressbar --needed base-devel devtools btrfs-progs dbus sudo
+pacman -Syu --noconfirm --noprogressbar --needed base-devel devtools multilib-devel btrfs-progs dbus sudo
 
 dbus-uuidgen --ensure=/etc/machine-id
 
@@ -29,7 +29,7 @@ sed "s|%COMMIT%|$GITHUB_SHA|" "$INPUT_PKGBUILD" > PKGBUILD
 chown user PKGBUILD
 
 # Build the package
-extra-x86_64-build -- -U user
+multilib-build -- -U user
 
 # Save the artifacts
 mkdir -p "$INPUT_OUTDIR"
