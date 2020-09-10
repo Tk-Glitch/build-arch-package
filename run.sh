@@ -30,6 +30,7 @@ chown user PKGBUILD
 chown -R user ./*
 mkdir -p "/home/user/.config/frogminer"
 echo -e '_NOINITIALPROMPT="false"' > /home/user/.config/frogminer/wine-tkg.cfg
+cd "$PKGBUILD_DIR"
 
 # Build the package
 multilib-build -- -U user
