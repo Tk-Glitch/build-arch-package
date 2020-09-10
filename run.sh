@@ -27,8 +27,8 @@ cd /home/user
 cp -r "$PKGBUILD_DIR"/* ./ || true
 sed "s|%COMMIT%|$GITHUB_SHA|" "$INPUT_PKGBUILD" > PKGBUILD
 chown user PKGBUILD
-mkdir -p "/github/home/user/.frogminer"
-echo -e '_NOINITIALPROMPT="false"' > /github/home/user/.frogminer/wine-tkg.cfg
+mkdir -p "/home/user/.config/frogminer"
+echo -e '_NOINITIALPROMPT="false"' > /home/user/.config/frogminer/wine-tkg.cfg
 
 # Build the package
 multilib-build -- -U user
