@@ -27,7 +27,7 @@ cd /home/user
 cp -r "$PKGBUILD_DIR"/* ./ || true
 sed "s|%COMMIT%|$GITHUB_SHA|" "$INPUT_PKGBUILD" > PKGBUILD
 chown user PKGBUILD
-chown -r user ./*
+chown -R user ./*
 mkdir -p "/home/user/.config/frogminer"
 echo -e '_NOINITIALPROMPT="false"' > /home/user/.config/frogminer/wine-tkg.cfg
 
