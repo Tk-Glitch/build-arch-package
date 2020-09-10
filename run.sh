@@ -25,12 +25,12 @@ cd /home/user
 
 # Copy PKGBUILD and others
 cp -r "$PKGBUILD_DIR"/* ./ || true
-sed "s|%COMMIT%|$GITHUB_SHA|" "$INPUT_PKGBUILD" > PKGBUILD
+#sed "s|%COMMIT%|$GITHUB_SHA|" "$INPUT_PKGBUILD" > PKGBUILD
 chown user PKGBUILD
 chown -R user ./*
 mkdir -p "/home/user/.config/frogminer"
 echo -e '_NOINITIALPROMPT="false"' > /home/user/.config/frogminer/wine-tkg.cfg
-cd "$PKGBUILD_DIR"
+#cd "$PKGBUILD_DIR"
 chown -R user ./*
 chmod +w -R *
 chmod +w -R "$SRCDEST"
