@@ -33,6 +33,7 @@ echo -e '_NOINITIALPROMPT="false"' > /home/user/.config/frogminer/wine-tkg.cfg
 cd "$PKGBUILD_DIR"
 chown -R user ./*
 chmod +w -R *
+chmod +w "$SRCDEST"
 
 # Build the package
 multilib-build -- -U user
