@@ -22,8 +22,8 @@ sed -i "s|MAKEFLAGS=.*|MAKEFLAGS=-j$(nproc)|" /etc/makepkg.conf
 useradd -m user
 cd /home/user
 
-# Copy PKGBUILD and *.install scripts
-cp "$PKGBUILD_DIR"/*install ./ || true
+# Copy PKGBUILD and others
+cp "$PKGBUILD_DIR"/* ./ || true
 sed "s|%COMMIT%|$GITHUB_SHA|" "$INPUT_PKGBUILD" > PKGBUILD
 chown user PKGBUILD
 
