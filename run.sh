@@ -31,7 +31,11 @@ mkdir -p "/home/user/.config/frogminer"
 echo -e '_NOINITIALPROMPT="false"' > /home/user/.config/frogminer/wine-tkg.cfg
 
 # Build the package
-multilib-build -- -U user
+#multilib-build -- -U user
+mkdir ~/chroot
+CHROOT=$HOME/chroot
+mkarchroot $CHROOT/root base-devel
+makechrootpkg -c -r -U user $CHROOT
 
 # Save the artifacts
 mkdir -p "$INPUT_OUTDIR"
