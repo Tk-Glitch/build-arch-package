@@ -11,6 +11,7 @@ INPUT_OUTDIR="$(eval echo $INPUT_OUTDIR)"
 
 # Get PKGBUILD dir
 PKGBUILD_DIR=$(dirname $(readlink -f $INPUT_PKGBUILD))
+export LANG=C
 
 # Prepare the environment
 echo -e "[multilib]\nInclude = \/etc\/pacman\.d\/mirrorlist" >> /etc/pacman.conf
