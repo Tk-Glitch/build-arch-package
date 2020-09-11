@@ -86,7 +86,7 @@ chmod +w -R *
 #multilib-build
 mkdir -p $HOME/chroot
 CHROOT=$HOME/chroot
-mkarchroot $CHROOT/root base-devel
+mkarchroot $CHROOT/root base-devel devtools multilib-devel btrfs-progs dbus dbus-glib lib32-dbus lib32-dbus-glib sudo
 makechrootpkg -c -r -U user $CHROOT
 #makechrootpkg -r /var/lib/archbuild/multilib-x86_64
 
