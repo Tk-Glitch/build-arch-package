@@ -86,9 +86,9 @@ chmod +w -R *
 #multilib-build
 mkdir -p $HOME/chroot
 CHROOT=$HOME/chroot
-#mkarchroot $CHROOT/root base-devel
-#makechrootpkg -c -r -U user $CHROOT
-makechrootpkg -r /var/lib/archbuild/multilib-x86_64
+mkarchroot $CHROOT/root base-devel
+makechrootpkg -c -r -U user $CHROOT
+#makechrootpkg -r /var/lib/archbuild/multilib-x86_64
 
 # Save the artifacts
 mkdir -p "$INPUT_OUTDIR"
