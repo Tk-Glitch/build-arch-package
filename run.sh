@@ -37,7 +37,7 @@ useradd builder -m
 echo "builder ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 
 # Give all users (particularly builder) full access to these files
-chmod -R a+rw 
+chmod -R a+rw .
 
 mkdir -p "/home/user/.config/frogminer"
 echo -e '_NOINITIALPROMPT="true"' > /home/user/.config/frogminer/wine-tkg.cfg
