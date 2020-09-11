@@ -29,7 +29,7 @@ cp -r "$PKGBUILD_DIR"/* ./ || true
 chown user PKGBUILD
 chown -R user ./*
 mkdir -p "/home/user/.config/frogminer"
-echo -e '_NOINITIALPROMPT="false"' > /home/user/.config/frogminer/wine-tkg.cfg
+echo -e '_NOINITIALPROMPT="true"' > /home/user/.config/frogminer/wine-tkg.cfg
 #cd "$PKGBUILD_DIR"
 chown -R user ./*
 chmod +w -R *
