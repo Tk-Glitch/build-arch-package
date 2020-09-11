@@ -54,9 +54,14 @@ fi
 
 _userhome="/home/builder"
 _linux58cfg="$_userhome"/.config/frogminer/linux58-tkg.cfg
+_winecfg="$_userhome"/.config/frogminer/wine-tkg.cfg
+_protoncfg="$_userhome"/.config/frogminer/proton-tkg.cfg
 
 mkdir -p "$_userhome/.config/frogminer"
-echo -e '_NOINITIALPROMPT="true"' > "$_userhome"/.config/frogminer/wine-tkg.cfg
+echo -e '_NOINITIALPROMPT="true"' > "$_winecfg"
+echo -e '_NOINITIALPROMPT="true"' > "$_protoncfg"
+echo -e '_hotfixes_no_confirm="true"' > "$_winecfg"
+echo -e '_hotfixes_no_confirm="true"' > "$_protoncfg"
 
 echo -e '_distro=""' > "$_linux58cfg"
 echo -e '_EXT_CONFIG_PATH=~/.config/frogminer/linux58-tkg.cfg' >> "$_linux58cfg"
