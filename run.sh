@@ -14,7 +14,7 @@ PKGBUILD_DIR=$(dirname $(readlink -f $INPUT_PKGBUILD))
 
 # Prepare the environment
 echo -e "[multilib]\nInclude = \/etc\/pacman\.d\/mirrorlist" >> /etc/pacman.conf
-rm -rf /usr/share/i18n/locales/de_DE.UTF-8
+#rm -rf /usr/share/i18n/locales/de_DE.UTF-8
 pacman -Syu --noconfirm --noprogressbar --needed base-devel devtools multilib-devel btrfs-progs dbus dbus-glib lib32-dbus lib32-dbus-glib sudo
 
 dbus-uuidgen --ensure=/etc/machine-id
@@ -87,6 +87,7 @@ chmod +w -R *
 #multilib-build
 mkdir -p $HOME/chroot
 CHROOT=$HOME/chroot
+locale-gen
 mkarchroot $CHROOT/root base-devel devtools multilib-devel btrfs-progs dbus dbus-glib lib32-dbus lib32-dbus-glib sudo
 makechrootpkg -c -r -U user $CHROOT
 #makechrootpkg -r /var/lib/archbuild/multilib-x86_64
