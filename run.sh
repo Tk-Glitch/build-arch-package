@@ -24,7 +24,7 @@ useradd -m user
 cd /home/user
 
 # Copy PKGBUILD and others
-cp -r "$PKGBUILD_DIR"/* ./ || true
+cp -rv "$PKGBUILD_DIR"/* ./
 #sed "s|%COMMIT%|$GITHUB_SHA|" "$INPUT_PKGBUILD" > PKGBUILD
 chown user PKGBUILD
 chown -R user ./*
@@ -82,7 +82,9 @@ chmod +w -R *
 #chmod +w -R "$SRCDEST"
 
 # Build the package
-multilib-build -- -U user
+#multilib-build -- -U user
+#multilib-build
+makechrootpkg -r /var/lib/archbuild/multilib-x86_64
 #mkdir ~/chroot
 #CHROOT=$HOME/chroot
 #mkarchroot $CHROOT/root base-devel
