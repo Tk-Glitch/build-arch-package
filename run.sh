@@ -152,6 +152,6 @@ function namcap_check() {
 	done
 }
 
-if [ -z "${INPUT_NAMCAPDISABLE:-}" ]; then
-	namcap_check
-fi
+#if [ -z "${INPUT_NAMCAPDISABLE:-}" ]; then
+#	namcap_check
+#fi
