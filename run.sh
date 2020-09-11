@@ -20,6 +20,8 @@ useradd builder -m
 # Give user `builder` passwordless sudo access
 echo "builder ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 
+cd linux58-tkg
+
 # Give all users (particularly builder) full access to these files
 chmod -R a+rw .
 
