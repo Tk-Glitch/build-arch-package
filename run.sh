@@ -11,25 +11,34 @@ INPUT_OUTDIR="$(eval echo $INPUT_OUTDIR)"
 
 # Get PKGBUILD dir
 PKGBUILD_DIR=$(dirname $(readlink -f $INPUT_PKGBUILD))
-export LANG=C
+#export LANG=C
 
 # Prepare the environment
 echo -e "[multilib]\nInclude = \/etc\/pacman\.d\/mirrorlist" >> /etc/pacman.conf
 #rm -rf /usr/share/i18n/locales/de_DE.UTF-8
 pacman -Syu --noconfirm --noprogressbar --needed base-devel devtools multilib-devel btrfs-progs dbus dbus-glib lib32-dbus lib32-dbus-glib sudo
 
-dbus-uuidgen --ensure=/etc/machine-id
+#dbus-uuidgen --ensure=/etc/machine-id
 
 sed -i "s|MAKEFLAGS=.*|MAKEFLAGS=-j$(nproc)|" /etc/makepkg.conf
 
-useradd -m user
-cd /home/user
+#useradd -m user
+#cd /home/user
 
 # Copy PKGBUILD and others
-cp -rv "$PKGBUILD_DIR"/* ./
+#cp -rv "$PKGBUILD_DIR"/* ./
 #sed "s|%COMMIT%|$GITHUB_SHA|" "$INPUT_PKGBUILD" > PKGBUILD
-chown user PKGBUILD
-chown -R user ./*
+#chown user PKGBUILD
+#chown -R user ./*
+
+useradd builder -m
+# When installing dependencies, makepkg will use sudo
+# Give user `builder` passwordless sudo access
+echo "builder ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+
+# Give all users (particularly builder) full access to these files
+chmod -R a+rw 
+
 mkdir -p "/home/user/.config/frogminer"
 echo -e '_NOINITIALPROMPT="true"' > /home/user/.config/frogminer/wine-tkg.cfg
 
@@ -79,18 +88,20 @@ echo -e '_config_fragments="false"' >> /home/user/.config/frogminer/linux58-tkg.
 echo -e '_config_fragments_no_confirm="false"' >> /home/user/.config/frogminer/linux58-tkg.cfg
 
 #cd "$PKGBUILD_DIR"
-chown -R user ./*
-chmod +w -R *
+#chown -R user ./*
+#chmod +w -R *
 #chmod +w -R "$SRCDEST"
+
+sudo -H -u builder makepkg --syncdeps --noconfirm ${INPUT_MAKEPKGARGS:-}
 
 # Build the package
 #multilib-build -- -U user
 #multilib-build
-mkdir -p $HOME/chroot
-CHROOT=$HOME/chroot
-locale-gen
-mkarchroot $CHROOT/root base-devel devtools multilib-devel btrfs-progs dbus dbus-glib lib32-dbus lib32-dbus-glib sudo
-makechrootpkg -c -r -U user $CHROOT
+#mkdir -p $HOME/chroot
+#CHROOT=$HOME/chroot
+#locale-gen
+#mkarchroot $CHROOT/root base-devel devtools multilib-devel btrfs-progs dbus dbus-glib lib32-dbus lib32-dbus-glib sudo
+#makechrootpkg -c -r -U user $CHROOT
 #makechrootpkg -r /var/lib/archbuild/multilib-x86_64
 
 # Save the artifacts
