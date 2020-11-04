@@ -46,7 +46,21 @@ echo -e '_hotfixes_no_confirm="true"' > "$_winecfg"
 echo -e '_hotfixes_no_confirm="true"' > "$_protoncfg"
 
 # linux-tkg
-echo -e "_version=\"$KERNELVER\"" > "$_linuxcfg"
+
+# version
+if [ -n "$KERNELVER" ]; then
+  echo -e "_version=\"$KERNELVER\"" > "$_linuxcfg"
+else
+  echo -e "_version=\"5.4\"" > "$_linuxcfg"
+fi
+
+# sched
+if [ -n "$CPUSCHED" ]; then
+  echo -e "_cpusched=\"$CPUSCHED\"" >> "$_linuxcfg"
+else
+  echo -e "_cpusched=\"cfs\"" > "$_linuxcfg"
+fi
+
 echo -e '_distro=""' >> "$_linuxcfg"
 echo -e '_EXT_CONFIG_PATH=~/.config/frogminer/linux-tkg.cfg' >> "$_linuxcfg"
 echo -e '_NUKR="true"' >> "$_linuxcfg"
@@ -61,7 +75,6 @@ echo -e '_diffconfig="false"' >> "$_linuxcfg"
 echo -e '_diffconfig_name=""' >> "$_linuxcfg"
 echo -e '_configfile="config.x86_64"' >> "$_linuxcfg"
 echo -e '_debugdisable="false"' >> "$_linuxcfg"
-echo -e "_cpusched=\"$CPUSCHED\"" >> "$_linuxcfg"
 echo -e '_sched_yield_type="0"' >> "$_linuxcfg"
 echo -e '_rr_interval="default"' >> "$_linuxcfg"
 echo -e '_ftracedisable="false"' >> "$_linuxcfg"
