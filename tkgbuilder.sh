@@ -16,6 +16,7 @@ useradd miniglitch -m
 echo "miniglitch ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 
 # Get packages list from dir
+git submodule update --init --recursive
 cd "$INPUT_PKGBUILD"
 chmod -R a+rw .
 mapfile -t PKGFILES < <( sudo -u miniglitch makepkg --packagelist )
