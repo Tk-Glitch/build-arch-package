@@ -15,19 +15,19 @@ pacman -Syu --noconfirm base-devel git schedtool ccache
 useradd miniglitch -m
 echo "miniglitch ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 
-cd .. && git clone --recurse-submodules https://github.com/Tk-Glitch/PKGBUILDS.git
+# clone
+git clone --recurse-submodules https://github.com/Tk-Glitch/PKGBUILDS.git
 cd PKGBUILDS
 
 # Pull master
 for _tkg_tools in */; do
   if [ "$_tkg_tools" != ".git" ]; then
-    ( cd "$_tkg_tools" && git config pull.rebase false && git checkout master && git pull origin master )
+    ( cd "$_tkg_tools" && git config pull.rebase false && git checkout master && git pull origin master && chmod -R a+rw . )
   fi
 done
 
 # Get packages list from dir
 cd "$INPUT_PKGBUILD"
-chmod -R a+rw .
 mapfile -t PKGFILES < <( sudo -u miniglitch makepkg --packagelist )
 echo "Package(s): ${PKGFILES[*]}"
 
