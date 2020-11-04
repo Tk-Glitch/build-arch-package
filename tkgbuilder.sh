@@ -9,13 +9,14 @@ cat << EOM >> /etc/pacman.conf
 Include = /etc/pacman.d/mirrorlist
 EOM
 
+# Grab packages
 pacman -Syu --noconfirm base-devel git schedtool ccache
 
 # Create miniglitch
 useradd miniglitch -m
 echo "miniglitch ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 
-# clone
+# clone our PKGBUILDS repo
 git clone --recurse-submodules https://github.com/Tk-Glitch/PKGBUILDS.git
 cd PKGBUILDS
 
@@ -31,12 +32,12 @@ cd "$INPUT_PKGBUILD"
 mapfile -t PKGFILES < <( sudo -u miniglitch makepkg --packagelist )
 echo "Package(s): ${PKGFILES[*]}"
 
+# Set frogminer paths
 _userhome="/home/miniglitch"
+mkdir -p "$_userhome/.config/frogminer"
 _linuxcfg="$_userhome"/.config/frogminer/linux-tkg.cfg
 _winecfg="$_userhome"/.config/frogminer/wine-tkg.cfg
 _protoncfg="$_userhome"/.config/frogminer/proton-tkg.cfg
-
-mkdir -p "$_userhome/.config/frogminer"
 
 # wine/proton-tkg
 echo -e '_NOINITIALPROMPT="true"' > "$_winecfg"
@@ -96,16 +97,6 @@ echo -e '_config_fragments_no_confirm="false"' >> "$_linuxcfg"
 # build
 sudo -H -u miniglitch makepkg --syncdeps --noconfirm ${INPUT_MAKEPKGARGS:-}
 
-# Report built package archives
-i=0
-for PKGFILE in "${PKGFILES[@]}"; do
-	# makepkg reports absolute paths, must be relative for use by other actions
-	RELPKGFILE="$(realpath --relative-base="$PWD" "$PKGFILE")"
-	# Caller arguments to makepkg may mean the pacakge is not built
-	if [ -f "$PKGFILE" ]; then
-		echo "::set-output name=pkgfile$i::$RELPKGFILE"
-	else
-		echo "Archive $RELPKGFILE not built"
-	fi
-	(( ++i ))
-done
+echo -e "Current path is $PWD"
+
+mv *.pkg.tar.zst ../../../
