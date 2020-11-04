@@ -9,11 +9,14 @@ cat << EOM >> /etc/pacman.conf
 Include = /etc/pacman.d/mirrorlist
 EOM
 
-pacman -Syu --noconfirm base-devel
+pacman -Syu --noconfirm base-devel git
 
 # Create miniglitch
 useradd miniglitch -m
 echo "miniglitch ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+
+cd .. && git clone --recurse-submodules https://github.com/Tk-Glitch/PKGBUILDS.git
+cd PKGBUILDS
 
 # Get packages list from dir
 cd "$INPUT_PKGBUILD"
