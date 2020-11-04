@@ -1,32 +1,37 @@
-# Build Arch Linux package Github Action
+# Build TkG's pacman packages
 
 ```yaml
+name: Frog-Worker-linux58
+
+...
+
 jobs:
-  my-job:
-    ...
+  pkgbuild:
+    runs-on: ubuntu-latest
     container:
       image: archlinux
       options: --privileged
       volumes:
         - /sys/fs/cgroup:/sys/fs/cgroup
     steps:
-      ...
-      - name: Build Arch Linux package
-        uses: FFY00/build-arch-package@v1
-        with:
-          PKGBUILD: path/to/my/PKGBUILD
-      ...
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Makepkg Build and Check
+      id: makepkg
+      uses: Tk-Glitch/tkg-builer@master
+    - name: Print Package Files
+      run: |
+        echo "Successfully created the following package archive"
+        echo "Package: ${{ steps.makepkg.outputs.pkgfile0 }}"
+    - name: Upload Package Archive
+      uses: actions/upload-artifact@v2
+      with:
+        name: ${{ steps.makepkg.outputs.pkgfile0 }}
+        path: ${{ steps.makepkg.outputs.pkgfile0 }}  
+ 
 ```
 
-`%COMMIT%` in the PKGBUILD will be replaced by the commit that triggered the action.
+## Arguments
 
-See [.github/workflows/test.yml](.github/workflows/test.yml) for a working example.
-
-### Arguments
-
-Key        | Description                                 | Required | Default Value
----------- | ------------------------------------------- |:--------:| -------------
-`PKGBUILD` | PKGBUILD path                               | **Yes**  |
-`OUTDIR`   | Output directory to store the built package | No       | `$HOME/arch-packages`
-
-###### You can use environment variable names in the options, they will be resolved.
+- `PKGBUILD` PKGBUILD subdir - **Required for nested PKGBUILD files, for example `wine-tkg-git/proton-tkg/PKGBUILD`**
+- `OUTDIR` Output directory to store the built package - not required - default=`$HOME/arch-packages`

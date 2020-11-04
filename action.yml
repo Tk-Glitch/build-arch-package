@@ -1,14 +1,23 @@
 ---
-name: build-arch-package
-description: Build an Arch Linux package
+name: tkgbuilder
+description: Build TkG Arch Linux package
 inputs:
   PKGBUILD:
-    description: PKGBUILD path
-    required: true
+    description: PKGBUILD subdir
+    required: false
   OUTDIR:
     description: Output directory to store the built package (relative to $HOME)
     required: false
     default: $HOME/arch-packages
+  KERNELVER:
+    description: Target version for kernel builds
+    required: false
+    default: 54
+outputs:
+  pkgfile0:
+    description: "Filename of the first generated package archive. Usually only one."
+  pkgfile1:
+    description: "Filename of the 2nd generated package archive, etc."
 branding:
   color: blue
   icon: archive
