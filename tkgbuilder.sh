@@ -9,7 +9,7 @@ cat << EOM >> /etc/pacman.conf
 Include = /etc/pacman.d/mirrorlist
 EOM
 
-pacman -Syu --noconfirm base-devel
+pacman -Syu --noconfirm base-devel git
 
 # Create miniglitch
 useradd miniglitch -m
