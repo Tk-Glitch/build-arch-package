@@ -10,7 +10,7 @@ Include = /etc/pacman.d/mirrorlist
 EOM
 
 # Grab packages
-pacman -Syu --noconfirm base-devel git schedtool ccache
+pacman -Syu --noconfirm base-devel git schedtool #ccache
 
 # Create miniglitch
 useradd miniglitch -m
