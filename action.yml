@@ -12,7 +12,11 @@ inputs:
   KERNELVER:
     description: Target version for kernel builds
     required: false
-    default: 54
+    default: 5.4
+  CPUSCHED:
+    description: Target CPU scheduler
+    required: false
+    default: cfs
 outputs:
   pkgfile0:
     description: "Filename of the first generated package archive. Usually only one."
