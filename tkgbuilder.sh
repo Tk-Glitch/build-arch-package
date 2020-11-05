@@ -110,8 +110,6 @@ echo -e '_config_fragments_no_confirm="false"' >> "$_linuxcfg"
 # build
 sudo -H -u miniglitch makepkg --syncdeps --noconfirm ${INPUT_MAKEPKGARGS:-}
 
-echo -e "Current path is $PWD"
-
 # Report built package archives
 i=0
 for PKGFILE in "${PKGFILES[@]}"; do
@@ -128,3 +126,5 @@ done
 
 cp -v *.pkg.tar.zst ../../../
 cp -v *.pkg.tar.zst ../../
+
+echo -e "Current path is $PWD"
