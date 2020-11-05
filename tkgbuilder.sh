@@ -112,4 +112,19 @@ sudo -H -u miniglitch makepkg --syncdeps --noconfirm ${INPUT_MAKEPKGARGS:-}
 
 echo -e "Current path is $PWD"
 
-mv *.pkg.tar.zst ../../../
+# Report built package archives
+i=0
+for PKGFILE in "${PKGFILES[@]}"; do
+	# makepkg reports absolute paths, must be relative for use by other actions
+	RELPKGFILE="$(realpath --relative-base="$PWD" "$PKGFILE")"
+	# Caller arguments to makepkg may mean the pacakge is not built
+	if [ -f "$PKGFILE" ]; then
+		echo "::set-output name=pkgfile$i::$RELPKGFILE"
+	else
+		echo "Archive $RELPKGFILE not built"
+	fi
+	(( ++i ))
+done
+
+cp -v *.pkg.tar.zst ../../../
+cp -v *.pkg.tar.zst ../../
